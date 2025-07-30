@@ -1,6 +1,19 @@
 # NetflixGPT
 -Create-react-app
 -Configure Tailwind
+-Header
+-Routing of the App
+-Login form
+-Sign up form
+-Form Validation
+-useRef Hook
+-Firebase setup
+-Deploying app to production
+-User Authentication using firebase
+-Saving user info by using userSlice in redux store
+-Implemented Sign Out
+-Update Profile
+
 
 # Features
 (LoggedOut)
