@@ -7,16 +7,15 @@ import { auth } from "../utils/firebase";
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { BG_IMG, USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
 
   const [errorMessage, setErrorMessage] = useState();
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const toggleSignInForm = () => {
     setIsSignInForm(!isSignInForm);
@@ -52,21 +51,20 @@ const Login = () => {
           const user = userCredential.user;
           updateProfile(user, {
             displayName: name.current.value,
+            photoURL: USER_AVATAR,
           })
             .then(() => {
               // Profile updated!
-              const { uid, email, displayName } = auth.currentUser;
+              const { uid, email, displayName, photoURL} = auth.currentUser;
 
               dispatch(
-                addUser({ uid: uid, email: email, displayName: displayName })
+                addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL, })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
               // ...
             });
-          console.log(user);
           // ...
         })
         .catch((error) => {
@@ -86,8 +84,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          navigate("/browse");
           // ...
         })
         .catch((error) => {
@@ -102,7 +98,7 @@ const Login = () => {
       <Header />
       <div className="absolute">
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/258d0f77-2241-4282-b613-8354a7675d1a/web/CA-en-20250721-TRIFECTA-perspective_26e23158-236f-425e-941d-3c8f37bdd62b_large.jpg"
+          src={BG_IMG}
           alt="bg-image"
         />
       </div>
