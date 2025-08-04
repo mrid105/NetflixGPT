@@ -32,6 +32,11 @@
 - TMDB image cdn
 - Made Browse UI Better : Tailwind
 - usePopularMovies Custom Hook
+- GPT Search Page
+- GPT Search Bar
+- Multi-Language Feature in our App
+- 
+
 
 
 # Features
@@ -42,7 +47,7 @@
 - Browse Page (after authentication)
     - Header
     - Main Movie
-        - railer in background
+        - Trailer in background
         - Title and Description
     - Movie Suggestions (separated by type)
         - vertically scrollable (Movie Lists * n)
