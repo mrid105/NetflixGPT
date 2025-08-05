@@ -1,9 +1,25 @@
-import React from 'react'
-
+import React from "react";
+import { useSelector } from "react-redux";
+import ShimmerMovieList from "./ShimmerMovieList";
+import MovieList from "./MovieList";
 const GptMovieSuggestions = () => {
-  return (
-    <div>GptMovieSuggestions</div>
-  )
-}
+  const { movieNames, movieResults, isLoading } = useSelector((store) => store.gpt);
 
-export default GptMovieSuggestions
+  if(isLoading) return <ShimmerMovieList />;
+  if (!movieNames) return null;
+  return (
+    <div className="m-4 p-4 bg-black bg-opacity-80">
+      <div>
+        {movieNames.map((movieName, index) => (
+          <MovieList
+            key={movieName}
+            title={movieName}
+            movies={movieResults[index]}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default GptMovieSuggestions;
