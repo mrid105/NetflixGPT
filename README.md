@@ -35,7 +35,14 @@
 - GPT Search Page
 - GPT Search Bar
 - Multi-Language Feature in our App
-- 
+- GPT Search OPENAI API key
+- GPT search API call
+- Fetched GPT movies suggestions from TMDB 
+- Created gpt slice to add data there
+- Reused movieList component to make movie recommendation container
+- Memoization
+- adding .env file to gitignore
+- made site responsive
 
 
 

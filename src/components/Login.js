@@ -13,7 +13,7 @@ import { BG_IMG, USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
-
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
 
   const dispatch = useDispatch();
@@ -41,6 +41,7 @@ const Login = () => {
 
     if (!isSignInForm) {
       //SignUp Logic
+      setLoading(true);
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
@@ -55,11 +56,17 @@ const Login = () => {
           })
             .then(() => {
               // Profile updated!
-              const { uid, email, displayName, photoURL} = auth.currentUser;
+              const { uid, email, displayName, photoURL } = user;
 
               dispatch(
-                addUser({ uid: uid, email: email, displayName: displayName, photoURL: photoURL, })
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
               );
+              setLoading(false);
             })
             .catch((error) => {
               // An error occurred
@@ -76,6 +83,7 @@ const Login = () => {
         });
     } else {
       //Sign In Logic
+      setLoading(true);
       signInWithEmailAndPassword(
         auth,
         email.current.value,
@@ -84,6 +92,7 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+          setLoading(false);
           // ...
         })
         .catch((error) => {
@@ -98,13 +107,14 @@ const Login = () => {
       <Header />
       <div className="absolute">
         <img
+          className="h-screen object-cover md:h-auto"
           src={BG_IMG}
           alt="bg-image"
         />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="bg-opacity-80 text-white w-4/12 absolute p-12 bg-black my-36 mx-auto left-0 right-0"
+        className="bg-opacity-80 text-white w-full md:w-4/12 absolute p-12 bg-black my-36 mx-auto left-0 right-0"
       >
         <h1 className="font-bold text-3xl py-4">
           {isSignInForm ? "Sign In" : "Sign Up"}
@@ -131,10 +141,39 @@ const Login = () => {
         ></input>
         <p className="text-red-500 p-4">{errorMessage}</p>
         <button
-          className="p-4 my-2 bg-red-700 rounded-lg w-full"
+          className="p-4 my-2 bg-red-700 rounded-lg w-full flex justify-center items-center"
           onClick={handleButtonClick}
+          disabled={loading}
         >
-          {isSignInForm ? "Sign In" : "Sign Up"}
+          {loading ? (
+            <span className="flex justify-center items-center">
+              <svg
+                className="animate-spin h-5 w-5 mr-2 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+              Loading...
+            </span>
+          ) : isSignInForm ? (
+            "Sign In"
+          ) : (
+            "Sign Up"
+          )}
         </button>
         {isSignInForm ? (
           <p className="py-4">
