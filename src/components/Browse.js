@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import useTrendingMovies from "../customHooks/useTrendingMovies";
 import useHorrorMovies from "../customHooks/useHorrorMovies";
 import useBollywoodMovies from "../customHooks/useBollywoodMovies";
+import useInternationalMovies from "../customHooks/useInternationalMovies";
+import useUpcomingMovies from "../customHooks/useUpcomingMovies";
 //should only have the render logic and all other logic should be abstracted
 const Browse = () => {
   useNowplayingMovies();
@@ -16,6 +18,8 @@ const Browse = () => {
   useTrendingMovies();
   useHorrorMovies();
   useBollywoodMovies();
+  useInternationalMovies();
+  useUpcomingMovies();
   const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   return (
     <div>
